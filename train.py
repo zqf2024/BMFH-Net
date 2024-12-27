@@ -3,7 +3,6 @@ import math
 import os
 import ssl
 import time
-
 import torch
 import torch.nn.functional as F
 from tensorboardX import SummaryWriter
@@ -11,8 +10,7 @@ from torch.utils.data import DataLoader
 from torchvision.models import vgg16
 from torchvision.utils import save_image
 from tqdm import tqdm
-# from My_Model_Z import swin_tiny_patch4_window8_256 as create_model
-from My_Model_L import SwinTransformer
+from My_Model_L import BFMT
 from Model_util import padding_image
 from make import getTxt
 from perceptual import LossNetwork
@@ -186,7 +184,7 @@ if args.use_bn:
 else:
     print('we are using InstanceNorm')
 
-D3D = SwinTransformer().to(device)
+D3D = BMFT().to(device)
 print('D3D parameters:', sum(param.numel() for param in D3D.parameters()))
 
 # --- Build optimizer --- #
