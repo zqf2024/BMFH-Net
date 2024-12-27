@@ -16,9 +16,30 @@
 >>clean<br>
 >>hazy
 
+>./output_result
 
-### 1.Train Dehazing
-<table ><tr><td bgcolor='blue' >python train.py --type 1 -train_batch_size 4 --gpus 0 </td></tr></table>
+
+### 1.Train 
+<div style="display: flex; justify - content: center; align - items: center; height: 100vh;">
+  <pre style="background - color: lightgray;"><code>
+  python train.py --type 1 -train_batch_size 4 --gpus 0
+  </code></pre>
+</div>
+
+### 2.Test 
+<div style="display: flex; justify - content: center; align - items: center; height: 100vh;">
+  <pre style="background - color: lightgray;"><code>
+  python test.py --type 1  --gpus 0
+  </code></pre>
+</div>
+
+### 3.Clone the repo
+<div style="display: flex; justify - content: center; align - items: center; height: 100vh;">
+  <pre style="background - color: lightgray;"><code>
+  it clone https://github.com/zqf2024/BFMT-Net.git
+  </code></pre>
+</div>
+
 
 
 
