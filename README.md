@@ -62,7 +62,7 @@
 <br>
 
 ![RISD.jpg](images/RSID.jpg)
-### Results on RISD remote sensing Dehazing Challenge testing images
+### Results on RSID remote sensing Dehazing Challenge testing images
 
 
 
