@@ -41,7 +41,7 @@
 </div>
 
 # Visualization Results
-![Example Image](./images/thin.jpg)
+![thin.jpg](images/thin.jpg)
 
 
 
