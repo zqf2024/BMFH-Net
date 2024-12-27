@@ -10,7 +10,7 @@ from torch.utils.data import DataLoader
 from torchvision.models import vgg16
 from torchvision.utils import save_image
 from tqdm import tqdm
-from My_Model_L import BFMT
+from Model import BMFT
 from Model_util import padding_image
 from make import getTxt
 from perceptual import LossNetwork
