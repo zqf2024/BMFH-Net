@@ -1,4 +1,4 @@
-# BFMT-Net
+# BMFT-Net
 
 ### Dependences
 
@@ -40,6 +40,8 @@
   </code></pre>
 </div>
 
+# Visualization Results
+![Example Image](./images/thin.jpg)
 
 
 
