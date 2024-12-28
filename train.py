@@ -10,7 +10,7 @@ from torch.utils.data import DataLoader
 from torchvision.models import vgg16
 from torchvision.utils import save_image
 from tqdm import tqdm
-from Model import BMFT
+from Model import BMFH
 from Model_util import padding_image
 from make import getTxt
 from perceptual import LossNetwork
@@ -184,7 +184,7 @@ if args.use_bn:
 else:
     print('we are using InstanceNorm')
 
-D3D = BMFT().to(device)
+D3D = BMFH().to(device)
 print('D3D parameters:', sum(param.numel() for param in D3D.parameters()))
 
 # --- Build optimizer --- #
