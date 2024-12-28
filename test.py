@@ -11,7 +11,7 @@ from Model_util import padding_image
 from make import getTxt
 from test_dataset import dehaze_test_dataset
 from utils_test import to_psnr, to_ssim_skimage
-from Model import BFMT
+from Model import BMFH
 # --- Parse hyper-parameters train --- #
 parser = argparse.ArgumentParser(description='Siamese Dehaze Network')
 parser.add_argument('--data_dir', type=str, default='')
@@ -110,7 +110,7 @@ if args.use_bn:
     print('we are using BatchNorm')
 else:
     print('we are using InstanceNorm')
-SDN = BFMT()
+SDN = BMFH()
 print('SDN parameters:', sum(param.numel() for param in SDN.parameters()))
 # --- Multi-GPU --- #
 SDN = SDN.to(device)
