@@ -402,7 +402,7 @@ class WFHE(nn.Module):
         return high_res, low_res
 
 
-class BMFT(nn.Module):
+class BMFH(nn.Module):
 
     def __init__(self, in_chans=3, dim=32, **kwargs):
         super().__init__()
@@ -509,7 +509,7 @@ class BMFT(nn.Module):
 
 if __name__ == '__main__':
     x = torch.randn((4, 3, 256, 256))
-    net = BMFT()
+    net = BMFH()
 
     from thop import profile, clever_format
 
