@@ -45,20 +45,20 @@
 ![thick.jpg](images/thick.jpg)
 ### Results on Haze1k-thick remote sensing Dehazing Challenge testing images  
 <br>
-<br>
+
 
   
 
 ![RICE1.jpg](images/RICE1.jpg)
 ### Results on RICE1 remote sensing Dehazing Challenge testing images  
 <br>
-<br> 
+
 
 
 ![RICE2.jpg](images/RICE2.jpg)
 ### Results on RICE2 remote sensing Dehazing Challenge testing images  
 <br>
-<br>  
+
 
 
 ![RISD.jpg](images/RSID.jpg)
