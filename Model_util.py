@@ -14,13 +14,7 @@ class ResnetBlock(nn.Module):
         )
 
         self.downsample_layer = nn.Sequential(
-            # nn.InstanceNorm2d(dim, eps=1e-6) if not bn else nn.BatchNorm2d(dim, eps=1e-6),
-            # nn.ReflectionPad2d(1),
-            # nn.Conv2d(dim, dim * 2, kernel_size=3, stride=2),
-            nn.Conv2d(dim, dim * 2, kernel_size=3, stride=1, padding=1),
-            nn.InstanceNorm2d(dim * 2) if not bn else nn.BatchNorm2d(dim * 2, eps=1e-6),
-            nn.LeakyReLU(0.2),
-            nn.Conv2d(dim * 2, dim * 2, kernel_size=3, stride=2, padding=1) ,
+            nn.Conv2d(dim, dim * 2, kernel_size=3, stride=2, padding=1),
             nn.InstanceNorm2d(dim * 2) if not bn else nn.BatchNorm2d(dim * 2, eps=1e-6),
             nn.LeakyReLU(0.2)
      
