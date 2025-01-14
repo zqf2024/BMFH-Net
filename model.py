@@ -217,7 +217,15 @@ class DGBM(nn.Module):
         super(DGBM, self).__init__()
 
         self.norm = nn.BatchNorm2d(dim)
-        self.conv = nn.Conv2d(dim, dim, kernel_size=3, stride=1, padding=1, groups=dim)
+         self.DWconv = nn.Sequential(
+            nn.Conv2d(dim, dim, kernel_size=3, stride=1, padding=1, groups=dim),
+            nn.ReLU(True),
+            nn.Conv2d(dim, dim, kernel_size=3, stride=1, padding=1, groups=dim),
+            nn.ReLU(True),
+            nn.Conv2d(dim, dim, kernel_size=3, stride=1, padding=1, groups=dim),
+            nn.ReLU(True)
+
+        )
         self.attn = Channel_Attention(dim, num_heads)
         self.conv0 = nn.Conv2d(dim, dim, 3, 1, 1)
         self.in_size = dim
@@ -284,7 +292,7 @@ class DGBM(nn.Module):
             x = self.identity(x)
         x = self.norm(x)
         xb = x + self.attn(x)
-        xh = x + self.conv(x)
+        xh = x + self.DWconv(x)
         diff_C = xb - xh
         diff_T = xh - xb
         Expert_C = self.DE_C(diff_C)
@@ -407,7 +415,7 @@ class BMFH(nn.Module):
     def __init__(self, in_chans=3, dim=32, **kwargs):
         super().__init__()
 
-        num_blocks = [1, 1, 1]
+        num_blocks = [1, 2, 2]
         heads = [1, 1, 1]
         self.DGBM1 = nn.Sequential(*[
             DGBM(dim=dim, num_heads=heads[0]
