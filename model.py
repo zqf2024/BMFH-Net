@@ -390,7 +390,7 @@ class WFHE(nn.Module):
         self.high_Enhancement = high_Enhancement(dim * 3)
 
     def forward(self, hl, lh, hh, low_frequency_layer):
-        B, C, _, _ = hl.shape
+        B, C, H, W = hl.shape
         high_information = torch.cat([hl,lh,hh],dim=1)
         high_res = self.high_Enhancement(high_information)
         fre_hazy = torch.fft.rfft2(low_frequency_layer, norm='backward')
