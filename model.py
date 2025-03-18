@@ -217,7 +217,7 @@ class DGBM(nn.Module):
         super(DGBM, self).__init__()
 
         self.norm = nn.BatchNorm2d(dim)
-         self.DWconv = nn.Sequential(
+        self.DWconv = nn.Sequential(
             nn.Conv2d(dim, dim, kernel_size=3, stride=1, padding=1, groups=dim),
             nn.ReLU(True),
             nn.Conv2d(dim, dim, kernel_size=3, stride=1, padding=1, groups=dim),
