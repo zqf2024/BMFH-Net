@@ -1,17 +1,20 @@
 import argparse
 import math
 import os
+import torch.nn as nn
 import torch
 from torch.utils.data import DataLoader
 from torchvision.utils import save_image as imwrite
 import time
 from thop import profile
+
 from tqdm import tqdm
+from Model import BMFH
 from Model_util import padding_image
 from make import getTxt
 from test_dataset import dehaze_test_dataset
 from utils_test import to_psnr, to_ssim_skimage
-from model import BMFH
+
 # --- Parse hyper-parameters train --- #
 parser = argparse.ArgumentParser(description='Siamese Dehaze Network')
 parser.add_argument('--data_dir', type=str, default='')
@@ -26,25 +29,29 @@ parser.add_argument('--test_name', type=str, default='hazy,clean')
 parser.add_argument('--num', type=str, default='9999999', help='')
 parser.add_argument('--use_bn', action='store_true', help='if bs>8 please use bn')
 parser.add_argument("--type", default=-1, type=int, help="choose a type 012345")
+
 args = parser.parse_args()
+
+
+
 
 tag = 'outdoor'
 if args.type == 0:
-    args.test_dir = "../datasets_test/Haze1k/Haze1k_thin/dataset/test/"
-    args.test_name = 'input,target'
+    args.test_dir = "/data1/lsl/zqf/dataset/haze1k-thin/test/"
+    args.test_name = 'hazy,clean'
     tag = 'thin'
 elif args.type == 1:
-    args.test_dir = "../datasets_test/Haze1k/Haze1k_moderate/dataset/test/"
-    args.test_name = 'input,target'
+    args.test_dir = "/T2007001/data/haze1k_moderate/Haze1k_moderate/test/test/test/"
+    args.test_name = 'hazy,clean'
     tag = 'moderate'
 elif args.type == 2:
-    args.test_dir = "../datasets_test/Haze1k/Haze1k_thick/dataset/test/"
-    args.test_name = 'input,target'
+    args.test_dir = "/T2007001/data/haze1k-thick/test/test/"
+    args.test_name = 'hazy,clean'
     tag = 'thick'
 elif args.type == 3:
-    args.test_dir = "../datasets_test/Dense_hazy/test/"
+    args.test_dir = "/T2007001/data/RICE1/RICE1/test/"
     args.test_name = 'hazy,clean'
-    tag = 'dense'
+    tag = 'RICE1'
 elif args.type == 4:
     args.test_dir = "../datasets_test/nhhaze/test/"
     args.test_name = 'hazy,clean'
@@ -54,7 +61,7 @@ elif args.type == 5:
     args.test_name = 'hazy,clean'
     tag = 'outdoor'
 elif args.type == 6:
-    args.test_dir = "/T2020027/zqf/dataset/RSID/RSID/test/"
+    args.test_dir = "/T2007001/data/RSID/RSID/test/"
     args.test_name = 'hazy,clean'
     tag = 'RSID'
 elif args.type == 7:
@@ -120,6 +127,9 @@ SDN = torch.nn.DataParallel(SDN, device_ids=device_ids)
 # print("FLOPs: ", flops)
 # print("%.2fM" % (flops/1e6), "%.2fM" % (params/1e6))
 
+
+
+
 print('We are testing datasets: ', tag)
 getTxt(None, None, args.test_dir, args.test_name)
 test_hazy, test_gt = args.test_name.split(',')
@@ -171,6 +181,7 @@ with torch.no_grad():
     for (hazy, clean, name) in test_loader:
         hazy = hazy.to(device)
         clean = clean.to(device)
+      
         h, w = hazy.shape[2], hazy.shape[3]
         max_h = int(math.ceil(h / 4)) * 4
         max_w = int(math.ceil(w / 4)) * 4
@@ -207,4 +218,3 @@ test_txt.close()
 # imwrite(img_list[batch_idx], os.path.join(imsave_dir, str(batch_idx) + '.png'))
 
 # writer.close()
-
