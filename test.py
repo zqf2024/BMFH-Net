@@ -11,7 +11,7 @@ from Model_util import padding_image
 from make import getTxt
 from test_dataset import dehaze_test_dataset
 from utils_test import to_psnr, to_ssim_skimage
-from Model import BMFH
+from model import BMFH
 # --- Parse hyper-parameters train --- #
 parser = argparse.ArgumentParser(description='Siamese Dehaze Network')
 parser.add_argument('--data_dir', type=str, default='')
