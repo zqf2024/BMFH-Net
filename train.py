@@ -3,6 +3,7 @@ import math
 import os
 import ssl
 import time
+import torch.nn as nn
 import torch
 import torch.nn.functional as F
 from tensorboardX import SummaryWriter
@@ -10,7 +11,8 @@ from torch.utils.data import DataLoader
 from torchvision.models import vgg16
 from torchvision.utils import save_image
 from tqdm import tqdm
-from Model import BMFH
+# from My_Model_Z import swin_tiny_patch4_window8_256 as create_model
+from My_Model_L import SwinTransformer
 from Model_util import padding_image
 from make import getTxt
 from perceptual import LossNetwork
@@ -25,7 +27,7 @@ ssl._create_default_https_context = ssl._create_unverified_context
 parser = argparse.ArgumentParser(description='Siamese Dehaze Network')
 parser.add_argument('-learning_rate', help='Set the learning rate', default=1e-4, type=float)
 parser.add_argument('-train_batch_size', help='Set the training batch size', default=4, type=int)
-parser.add_argument('-train_epoch', help='Set the training epoch', default=10000, type=int)
+parser.add_argument('-train_epoch', help='Set the training epoch', default=8000, type=int)
 parser.add_argument("--type", default=-1, type=int, help="choose a type 123456")
 
 # parser.add_argument('--train_dir', type=str, default='')
@@ -36,7 +38,7 @@ parser.add_argument('--test_name', type=str, default='hazy,clean')
 
 parser.add_argument('--model_save_dir', type=str, default='./output_result')
 parser.add_argument('--log_dir', type=str, default=None)
-parser.add_argument('--gpus', default='3', type=str)
+parser.add_argument('--gpus', default='0', type=str)
 # --- Parse hyper-parameters test --- #
 parser.add_argument('--predict_result', type=str, default='./output_result/picture/')
 parser.add_argument('-test_batch_size', help='Set the testing batch size', default=1, type=int)
@@ -58,10 +60,11 @@ train_epoch = args.train_epoch
 start_epoch = 0
 sep = args.sep
 
+
 if args.type == 1:
-    args.train_dir = '/data1/ghy/lsl/Datasets/thin_660/test/'
+    args.train_dir = '/data1/lsl/zqf/dataset/haze1k/train/'
     args.train_name = 'hazy,clean'
-    args.test_dir = "/data1/ghy/lsl/Datasets/thin_660/test/"
+    args.test_dir = "/data1/lsl/zqf/dataset/haze1k-thin/test/"
     args.test_name = 'hazy,clean'
     args.out_pic = './output_pic/thin'
     args.pre_name = 'pre_model_thin.pkl'
@@ -108,13 +111,14 @@ elif args.type == 6:
     tag = 'RSID'
 
 elif args.type == 7:
-    args.train_dir = '/data1/lsl/zqf/dataset/haze1k/train/'
+    args.train_dir = '/T2007001/data/haze1k/train/train/'
     args.train_name = 'hazy,clean'
-    args.test_dir = "/data1/lsl/zqf/dataset/haze1k/test/"
+    args.test_dir = "/T2007001/data/haze1k/test/test/"
     args.test_name = 'hazy,clean'
     args.out_pic = './output_pic/thin'
     args.pre_name = 'pre_model_thin.pkl'
     tag = 'thin'
+
 
 
 # ********************our_data*************
@@ -184,7 +188,7 @@ if args.use_bn:
 else:
     print('we are using InstanceNorm')
 
-D3D = BMFH().to(device)
+D3D = SwinTransformer().to(device)
 print('D3D parameters:', sum(param.numel() for param in D3D.parameters()))
 
 # --- Build optimizer --- #
@@ -257,18 +261,6 @@ elif args.num != '9999999':
 else:
     print('--- no weight loaded ---')
 
-
-def cosine_similarity_loss(output1, output2, eps=1e-6):
-    
-    output1_pooled = F.adaptive_avg_pool2d(output1, (1, 1)).squeeze(-1).squeeze(-1)
-    output2_pooled = F.adaptive_avg_pool2d(output2, (1, 1)).squeeze(-1).squeeze(-1)
-
-    cos_sim = F.cosine_similarity(output1_pooled, output2_pooled, dim=1, eps=eps)
-
-    loss = 1 - cos_sim
-    return loss.mean()
-
-
 iteration = 0
 best_epoch_psnr = 0
 best_epoch_ssim = 0
@@ -281,6 +273,85 @@ best_ssim_psnr = 0
 print()
 start_time = time.time()
 
+
+def dwt_init(x):
+    x01 = x[:, :, 0::2, :] / 2
+    x02 = x[:, :, 1::2, :] / 2
+    x1 = x01[:, :, :, 0::2]
+    x2 = x02[:, :, :, 0::2]
+    x3 = x01[:, :, :, 1::2]
+    x4 = x02[:, :, :, 1::2]
+    x_LL = x1 + x2 + x3 + x4
+    x_HL = -x1 - x2 + x3 + x4
+    x_LH = -x1 + x2 - x3 + x4
+    x_HH = x1 - x2 - x3 + x4
+
+    return x_LL, x_HL, x_LH, x_HH
+
+
+def iwt_init(x):
+    r = 2
+    in_batch, in_channel, in_height, in_width = x.size()
+    # print([in_batch, in_channel, in_height, in_width])
+    out_batch, out_channel, out_height, out_width = in_batch, int(
+        in_channel / (r ** 2)), r * in_height, r * in_width
+    x1 = x[:, 0:out_channel, :, :] / 2
+    x2 = x[:, out_channel:out_channel * 2, :, :] / 2
+    x3 = x[:, out_channel * 2:out_channel * 3, :, :] / 2
+    x4 = x[:, out_channel * 3:out_channel * 4, :, :] / 2
+
+    h = torch.zeros([out_batch, out_channel, out_height, out_width], device=x.device).float()
+
+    h[:, :, 0::2, 0::2] = x1 - x2 - x3 + x4
+    h[:, :, 1::2, 0::2] = x1 - x2 + x3 - x4
+    h[:, :, 0::2, 1::2] = x1 + x2 - x3 - x4
+    h[:, :, 1::2, 1::2] = x1 + x2 + x3 + x4
+
+    return h
+
+
+class DWT(nn.Module):
+    def __init__(self):
+        super(DWT, self).__init__()
+        self.requires_grad = False
+
+    def forward(self, x):
+        return dwt_init(x)
+
+
+class IWT(nn.Module):
+    def __init__(self):
+        super(IWT, self).__init__()
+        self.requires_grad = False
+
+    def forward(self, ll, hl, lh, hh):
+        x = torch.cat((ll, hl, lh, hh), 1)
+        return iwt_init(x)
+
+
+class DehazeLoss(nn.Module):
+    def __init__(self):
+        super(DehazeLoss, self).__init__()
+        self.mse_loss = nn.MSELoss()
+        self.dwt = DWT()
+
+    def forward(self, dehazed_img, target_img):
+  
+
+  
+        dehazed_low, dehazed_high_h, dehazed_high_v, dehazed_high_d = self.dwt(dehazed_img)
+        target_low, target_high_h, target_high_v, target_high_d = self.dwt(target_img)
+
+
+
+        low_loss = F.smooth_l1_loss(dehazed_low, target_low)
+        high_loss_h = F.smooth_l1_loss(dehazed_high_h, target_high_h)
+        high_loss_v = F.smooth_l1_loss(dehazed_high_v, target_high_v)
+        high_loss_d = F.smooth_l1_loss(dehazed_high_d, target_high_d)
+        mse_loss = low_loss + high_loss_h + high_loss_v + high_loss_d
+        return mse_loss
+
+
 for epoch in range(start_epoch, train_epoch):
     print('++++++++++++++++++++++++ {} Datasets +++++++ {} epoch ++++++++++++++++++++++++'.format(tag, epoch))
     scheduler_G.step()
@@ -291,20 +362,18 @@ for epoch in range(start_epoch, train_epoch):
             iteration += 1
             hazy = hazy.to(device)
             clean = clean.to(device)
-            CNN_feature,tf_feature,img = D3D(hazy)
+            img = D3D(hazy)
             # no more forward
             D3D.zero_grad()
-
+            wavelet_fft = DehazeLoss()
+            wavelet_fft_loss = wavelet_fft(img, clean)
+          
             smooth_loss_l1 = F.smooth_l1_loss(img, clean)
             perceptual_loss = loss_network(img, clean)
             msssim_loss_ = 1 - msssim_loss(img, clean, normalize=True)
-            feature_align = 0.0
-            for i in range(len(CNN_feature)):
-                feature_align += cosine_similarity_loss(CNN_feature[i], tf_feature[i])
 
-
-
-            total_loss = smooth_loss_l1 + 0.01 * perceptual_loss + 0.5 * msssim_loss_ + feature_align
+          
+            total_loss = smooth_loss_l1 + 0.5 * wavelet_fft_loss 
 
             total_loss.backward()
             G_optimizer.step()
@@ -356,7 +425,7 @@ for epoch in range(start_epoch, train_epoch):
                 max_w = int(math.ceil(w / 4)) * 4
                 hazy, ori_left, ori_right, ori_top, ori_down = padding_image(hazy, max_h, max_w)
 
-                CNN_feature, tf_feature,frame_out = D3D(hazy)
+                frame_out = D3D(hazy)
                 if i % 200 == 0:
                     save_image(frame_out, os.path.join(args.out_pic, str(epoch) + '_' + str(i) + '_' + '.png'))
                 i = i + 1
@@ -364,6 +433,7 @@ for epoch in range(start_epoch, train_epoch):
                 frame_out = frame_out.data[:, :, ori_top:ori_down, ori_left:ori_right]
 
                 psnr_list.extend(to_psnr(frame_out, clean))
+
                 ssim_list.extend(to_ssim_skimage(frame_out, clean))
 
             avr_psnr = sum(psnr_list) / len(psnr_list)
@@ -399,3 +469,4 @@ for epoch in range(start_epoch, train_epoch):
 os.remove(os.path.join(args.train_dir, 'train.txt'))
 os.remove(os.path.join(args.test_dir, 'test.txt'))
 writer.close()
+
