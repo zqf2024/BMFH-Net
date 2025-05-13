@@ -18,7 +18,7 @@ fail to effectively fuse the features extracted from Convolu-tional Neural Netwo
 <span style="font-size:50px"><b>COMPARISON OF OUR METHOD AGAINST OTHERS ON THE STATEHAZE1K DATASET. ↑ INDICATES HIGHER IS BETTER.↓: SMALLER IS BETTER. </b></span><br><br>
 ![table1.jpg](images/table1.jpg)
 
-<span style="font-size:50px"><b>COMPARISON RESULTS OF OUR METHOD WITH OTHER ADVANCED METHODS ON THE RICE AND RSID DATASETS.↑ INDICATES HIGHER IS BETTER.↓: SMALLER IS BETTER. </b></span><br><br>
+<span style="font-size:40px"><b>COMPARISON RESULTS OF OUR METHOD WITH OTHER ADVANCED METHODS ON THE RICE AND RSID DATASETS.↑ INDICATES HIGHER IS BETTER.↓: SMALLER IS BETTER. </b></span><br><br>
 ![table2.jpg](images/table2.jpg)
 
 ## Qualitative results🔥
