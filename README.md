@@ -15,9 +15,12 @@ fail to effectively fuse the features extracted from Convolu-tional Neural Netwo
 ![WFHE.jpg](images/WFHE.jpg)
 
 ## Quantitative results🔥
-### Dependences
 ![table1.jpg](images/table1.jpg)
 
+## Quantitative results🔥
+![table2.jpg](images/table2.jpg)
+
+### Dependences
 
 1.Pytorch 1.8.0  
 2.python 3.8  
