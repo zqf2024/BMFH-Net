@@ -7,6 +7,9 @@ fail to effectively fuse the features extracted from Convolu-tional Neural Netwo
 
 ## Overall architecture
 ![main.jpg](images/main.jpg)
+
+## Differential-Expert Guided Bidirectional Modulation module
+![DGBM.jpg](images/DGBM.jpg)
 ### Dependences
 
 
