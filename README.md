@@ -17,8 +17,24 @@ fail to effectively fuse the features extracted from Convolu-tional Neural Netwo
 ## Quantitative results🔥
 ![table1.jpg](images/table1.jpg)
 
-## Quantitative results🔥
 ![table2.jpg](images/table2.jpg)
+
+## Qualitative results🔥
+
+![thick.jpg](images/thick.jpg)
+### Results on Haze1k-thick remote sensing Dehazing Challenge testing images  
+<br>
+
+![RICE1.jpg](images/RICE1.jpg)
+### Results on RICE1 remote sensing Dehazing Challenge testing images  
+<br>
+
+![RICE2.jpg](images/RICE2.jpg)
+### Results on RICE2 remote sensing Dehazing Challenge testing images  
+<br>
+
+![RISD.jpg](images/RSID.jpg)
+### Results on RSID remote sensing Dehazing Challenge testing images
 
 ### Dependences
 
@@ -60,29 +76,7 @@ fail to effectively fuse the features extracted from Convolu-tional Neural Netwo
   </code></pre>
 </div>
 
-# Visualization Results
 
-![thick.jpg](images/thick.jpg)
-### Results on Haze1k-thick remote sensing Dehazing Challenge testing images  
-<br>
-
-
-  
-
-![RICE1.jpg](images/RICE1.jpg)
-### Results on RICE1 remote sensing Dehazing Challenge testing images  
-<br>
-
-
-
-![RICE2.jpg](images/RICE2.jpg)
-### Results on RICE2 remote sensing Dehazing Challenge testing images  
-<br>
-
-
-
-![RISD.jpg](images/RSID.jpg)
-### Results on RSID remote sensing Dehazing Challenge testing images
 
 
 
