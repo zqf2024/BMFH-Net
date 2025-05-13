@@ -13,7 +13,10 @@ fail to effectively fuse the features extracted from Convolu-tional Neural Netwo
 
 ## Wavelet Frequency Heterogeneous Enhancement module
 ![WFHE.jpg](images/WFHE.jpg)
+
+## Quantitative results🔥
 ### Dependences
+![table1.jpg](images/table1.jpg)
 
 
 1.Pytorch 1.8.0  
