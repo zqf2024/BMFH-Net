@@ -19,7 +19,8 @@ fail to effectively fuse the features extracted from Convolu-tional Neural Netwo
 GREEN AND BLUE FONTS REPRESENT THE FIRST, SECOND AND THIRD RANKINGS IN TERMS OF PSNR OR SSIM.</b></span><br>
 ![table1.jpg](images/table1.jpg)
 
-<span style="font-size:30px"><b>COMPARISON RESULTS OF OUR METHOD WITH OTHER ADVANCED METHODS ON THE RICE AND RSID DATASETS.</b></span><br>
+<span style="font-size:30px"><b>COMPARISON RESULTS OF OUR METHOD WITH OTHER ADVANCED METHODS ON THE RICE AND RSID DATASETS.↑ INDICATES HIGHER IS BETTER. THE RED,
+GREEN AND BLUE FONTS REPRESENT THE FIRST, SECOND AND THIRD RANKINGS IN TERMS OF PSNR OR SSIM.</b></span><br>
 ![table2.jpg](images/table2.jpg)
 
 ## Qualitative results🔥
