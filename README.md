@@ -1,5 +1,5 @@
 # BMFT-Net
-
+This Paper is accepted in Pattern Recognition 2024
 ### Dependences
 
 1.Pytorch 1.8.0  
