@@ -6,7 +6,7 @@ Abstract—Recently, deep neural networks have been exten-sively explored in rem
 fail to effectively fuse the features extracted from Convolu-tional Neural Networks (CNNs) and Transformer networks, leading to performance degradation. Moreover, most dehazing methods lack further exploration of the distinct properties of high- and low-frequency features, which are crucial for texture restoration and haze removal. To address these issues, we propose a Bidirectional-Modulation Frequency-Heterogeneous Network (BMFH-Net). Speciffcally, we propose a Differential-Expert Guided Bidirectional Modulation (DGBM) module that incorporates Differential experts and physical inversion models to exploit the complementarity of CNN-Transformer features and extract their latent haze-related physical characteristics, thereby enabling more effective bidirectional alignment. Furthermore, a Wavelet Frequency Heterogeneous Enhancement (WFHE) Mod-ule is designed to capture the most representative high-frequency features to reffne image texture details, while enhancing the global perception of haze and reconstructing structural information during low-frequency processing. Experiments on challenging remote sensing image datasets demonstrate our BMFH-Net outperforms several state-of-the-art haze removal methods. The code is released available at https://github.com/zqf2024/BMFH-Net.
 
 ## Overall architecture
-![RICE1.jpg](images/RICE1.jpg)
+![RICE1.jpg](images/main.jpg)
 ### Dependences
 
 
