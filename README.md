@@ -15,6 +15,8 @@ fail to effectively fuse the features extracted from Convolu-tional Neural Netwo
 ![WFHE.jpg](images/WFHE.jpg)
 
 ## Quantitative results🔥
+<span style="font-size:20px">COMPARISON OF OUR METHOD AGAINST OTHERS ON THE STATEHAZE1K DATASET. ↑ INDICATES HIGHER IS BETTER. THE RED,
+GREEN AND BLUE FONTS REPRESENT THE FIRST, SECOND AND THIRD RANKINGS IN TERMS OF PSNR OR SSIM.</span>
 ![table1.jpg](images/table1.jpg)
 
 ![table2.jpg](images/table2.jpg)
