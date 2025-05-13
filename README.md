@@ -10,6 +10,9 @@ fail to effectively fuse the features extracted from Convolu-tional Neural Netwo
 
 ## Differential-Expert Guided Bidirectional Modulation module
 ![DGBM.jpg](images/DGBM.jpg)
+
+## Wavelet Frequency Heterogeneous Enhancement module
+![WFHE.jpg](images/WFHE.jpg)
 ### Dependences
 
 
