@@ -37,7 +37,7 @@ fail to effectively fuse the features extracted from Convolu-tional Neural Netwo
 
 ![RISD.jpg](images/RSID.jpg)
 ### Results on RSID remote sensing Dehazing Challenge testing images
-
+## Getting Started
 ### Dependences
 
 1.Pytorch 1.8.0  
