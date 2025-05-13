@@ -35,7 +35,7 @@ fail to effectively fuse the features extracted from Convolu-tional Neural Netwo
 ### Results on RICE2 remote sensing Dehazing Challenge testing images  
 <br>
 
-![RISD.jpg](images/RSID.jpg)
+![RSID.jpg](images/RSID.jpg)
 ### Results on RSID remote sensing Dehazing Challenge testing images
 ## Getting Started
 ### Dependences
