@@ -1,4 +1,4 @@
-# BMFH-Net
+# Bidirectional-Modulation Frequency-Heterogeneous Network for Remote Sensing Image Dehazing(IEEE TCSVT 2025)
 
 
 
