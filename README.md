@@ -1,6 +1,9 @@
 # BMFT-Net
 
+This Paper is accepted in TCSVT 2025
+
 ### Dependences
+
 
 1.Pytorch 1.8.0  
 2.python 3.8  
