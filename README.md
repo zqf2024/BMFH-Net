@@ -1,6 +1,6 @@
 # BMFH-Net
 
-This Paper is accepted in TCSVT 2025
+
 
 ### Dependences
 
