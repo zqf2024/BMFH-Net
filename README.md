@@ -82,6 +82,9 @@ fail to effectively fuse the features extracted from Convolu-tional Neural Netwo
 
 If our work assists your research, feel free to give us a star ⭐ or cite us using:
 
+## Contact
+If you have any questions or suggestions about our paper and repo, please feel free to concat us via zhongqingfei@ctgu.edu.cn.
+
 
 
 
