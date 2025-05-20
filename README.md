@@ -81,6 +81,20 @@ fail to effectively fuse the features extracted from Convolu-tional Neural Netwo
 ## Citation
 
 If our work assists your research, feel free to give us a star ⭐ or cite us using:
+<div style="display: flex; justify - content: center; align - items: center; height: 100vh;">
+  <pre style="background - color: lightgray;"><code>
+ @ARTICLE{11006655,
+  author={Sun, Hang and Zhong, Qingfei and Du, Bo and Tu, Zhigang and Wan, Jun and Wang, Wenbin and Ren, Dong},
+  journal={IEEE Transactions on Circuits and Systems for Video Technology}, 
+  title={Bidirectional-Modulation Frequency-Heterogeneous Network for Remote Sensing Image Dehazing}, 
+  year={2025},
+  volume={},
+  number={},
+  pages={1-1},
+  keywords={Differential Experts;CNN-Transformer Complementarity;Frequency Heterogeneous Enhancement;Remote Sensing;Image Dehazing},
+  doi={10.1109/TCSVT.2025.3570998}}
+  </code></pre>
+</div>
 
 
 ## Contact
