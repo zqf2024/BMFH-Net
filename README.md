@@ -74,7 +74,7 @@ fail to effectively fuse the features extracted from Convolu-tional Neural Netwo
 ### 3.Clone the repo
 <div style="display: flex; justify - content: center; align - items: center; height: 100vh;">
   <pre style="background - color: lightgray;"><code>
-  git clone https://github.com/zqf2024/BFMT-Net.git
+  git clone https://github.com/zqf2024/BFMH-Net.git
   </code></pre>
 </div>
 
