@@ -98,7 +98,7 @@ If our work assists your research, feel free to give us a star ⭐ or cite us us
 
 
 ## Contact
-If you have any questions or suggestions about our paper and repo, please feel free to concat us via zhongqingfei@ctgu.edu.cn or zhongqingfei1998@gmail.com
+If you have any questions or suggestions about our paper and repo, please feel free to concat us via qfzhong@smail.nju.edu.cn or zhongqingfei1998@gmail.com
 
 
 
